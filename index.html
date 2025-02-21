@@ -117,6 +117,8 @@
 
                 //Identificando se alien e moeda se sobrepõem (overlap), ou seja, se o alien pegou a moeda.
                 this.physics.add.overlap(alien, moeda, function () {
+
+                    //Verificação adicionada para evitar duplicidade de pontos (algumas vezes aconteceu isso, por isso essa verificação está sendo usada).
                     if (!moedaPegada) {
                         moeda.setVisible(false);
                         var posicaoMoeda_Y = Phaser.Math.RND.between(50, 650);
