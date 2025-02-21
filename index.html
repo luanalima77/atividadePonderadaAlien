@@ -48,8 +48,9 @@
             var moedaPegada = false;
             var pontuacao = 0;
             var placar;
-            var fundoIndex = 0;
-            var fundos = ['fundo', 'fundo2']; //***TAREFA EXTRA: usando lista para trocar o fundo do jogo.
+            var fundos = ['fundo', 'fundo2', 'fundo3', 'fundo4']; //***TAREFA EXTRA: usando lista para trocar o fundo do jogo.
+            var indiceDoFundo = 0;
+            var ultimaTrocaDeImagemFundo;
             var fundo;
 
 
@@ -57,8 +58,10 @@
             function preload() {
                 this.load.image('fundo', 'assets/bg.png');
                 this.load.image('fundo2', 'assets/bg2.jpg');
+                this.load.image('fundo3', 'assets/bg3.png');
+                this.load.image('fundo4', 'assets/bg4.png');
                 this.load.image('turbo_nave', 'assets/turbo.png');
-                this.load.image('player', 'assets/alienigena.png');
+                this.load.image('alien', 'assets/alienigena.png');
                 this.load.image('plataforma_tijolo', 'assets/tijolos.png');
                 this.load.image('moeda', 'assets/moeda.png');
             }
@@ -66,8 +69,8 @@
 
             function create() {
                 //Definindo as configurações de largura e altura do fundo, bem como sua posição em relação aos demais itens.
-                fundo = this.add.image(larguraJogo / 2, alturaJogo / 2, fundos[fundoIndex]);
-                fundo.setDepth(-1);
+                fundo = this.add.image(larguraJogo / 2, alturaJogo / 2, fundos[indiceDoFundo]);
+                fundo.setDepth(-1); //Fundo para trás de todos os elementos.
 
 
                 //Placar: recebe a pontuação.
@@ -80,12 +83,13 @@
 
 
                 //Alien: configurando a física do alien e delimitando a área em que ele deve ficar por meio do setColliderWorldBounds(true).
-                alien = this.physics.add.sprite(larguraJogo / 2, 0, 'player');
+                alien = this.physics.add.sprite(larguraJogo / 2, 0, 'alien');
                 alien.setCollideWorldBounds(true);
 
 
                 //Habilitando os eventos no teclado (clique nas teclas).
                 teclado = this.input.keyboard.createCursorKeys();
+
 
                 //Plataforma 
                 plataforma = this.physics.add.staticImage(larguraJogo / 2, alturaJogo / 2, 'plataforma_tijolo');
@@ -143,20 +147,17 @@
                     semTurbo(); //Se o personagem não estiver subindo (tecla up pressionada), o efeito turbo é desativado.
                 }
 
-                
+
                 //Posicionando o fogo em relação ao alien.
                 fogo.setPosition(alien.x, alien.y + alien.height / 2);
 
 
                 //***TAREFA EXTRA: usando lista para trocar o fundo do jogo.
                 //A cada 10 moedas coletadas (10 pontos) pelo jogador, o fundo troca com base nas imagens da lista.
-                if (pontuacao % 10 === 0 && pontuacao > 0) {
-                    if (fundoIndex < fundos.length - 1) {
-                        fundoIndex++;
-                        fundo.destroy();
-                        fundo = this.add.image(larguraJogo / 2, alturaJogo / 2, fundos[fundoIndex]);
-                        fundo.setDepth(-1);
-                    }
+                if (pontuacao % 10 === 0 && pontuacao > 0 && pontuacao !== ultimaTrocaDeImagemFundo) {
+                    indiceDoFundo = (indiceDoFundo + 1) % fundos.length; 
+                    fundo.setTexture(fundos[indiceDoFundo]); 
+                    ultimaTrocaDeImagemDeFundo = pontuacao; 
                 }
 
                 moedaPegada = false;
