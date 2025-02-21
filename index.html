@@ -45,7 +45,7 @@
             var plataforma2; //***TAREFA EXTRA: outra plataforma.
             var plataforma3; //***TAREFA EXTRA: outra plataforma.
             var moeda;
-            var moedaPegada = false;
+            var moedaPegada = false; //A moeda começa no jogo sem ser coletada (false).
             var pontuacao = 0;
             var placar;
             var fundos = ['fundo', 'fundo2', 'fundo3']; //***TAREFA EXTRA: usando lista para trocar o fundo do jogo.
@@ -69,7 +69,7 @@
             function create() {
                 //Definindo as configurações de largura e altura do fundo, bem como sua posição em relação aos demais itens.
                 fundo = this.add.image(larguraJogo / 2, alturaJogo / 2, fundos[indiceDoFundo]);
-                fundo.setDepth(-1); //Fundo para trás de todos os elementos.
+                fundo.setDepth(-1); //Colocando o fundo para trás de todos os elementos. Por que usar o método setDepth? Porque ele organiza os elementos visuais em camadas, indicando quem é o fundo e os itens que aparecem sobre ele, por exemplo.
 
 
                 //Placar: recebe a pontuação.
@@ -81,26 +81,26 @@
                 fogo.setVisible(false, false);
 
 
-                //Alien: configurando a física do alien e delimitando a área em que ele deve ficar por meio do setColliderWorldBounds(true).
+                //Alien: configurando a física do alien e delimitando a área em que ele deve ficar por meio do método setColliderWorldBounds(true).
                 alien = this.physics.add.sprite(larguraJogo / 2, 0, 'alien');
                 alien.setCollideWorldBounds(true);
 
 
-                //Habilitando os eventos no teclado (clique nas teclas).
+                //Habilitando os eventos no teclado (clique nas teclas) por meio do método createCursorKeys().
                 teclado = this.input.keyboard.createCursorKeys();
 
 
                 //Plataforma.
                 plataforma = this.physics.add.staticImage(larguraJogo / 2, alturaJogo / 2, 'plataforma_tijolo');
-                this.physics.add.collider(alien, plataforma);
+                this.physics.add.collider(alien, plataforma); //Adicionando barreira física entre o alien e a plataforma.
 
                 
                 //***TAREFA EXTRA: adicionando outros elementos na tela, no caso, duas plataformas.
                 plataforma2 = this.physics.add.staticImage(larguraJogo / 5, alturaJogo / 1.3, 'plataforma_tijolo');
-                this.physics.add.collider(alien, plataforma2);
+                this.physics.add.collider(alien, plataforma2); //Adicionando barreira física entre o alien e a plataforma 2.
 
                 plataforma3 = this.physics.add.staticImage(larguraJogo / 1.2, alturaJogo / 1.3, 'plataforma_tijolo');
-                this.physics.add.collider(alien, plataforma3);
+                this.physics.add.collider(alien, plataforma3);  //Adicionando barreira física entre o alien e a plataforma 3.
 
 
                 //Configurando a física, a área delimitada e o quicar da moeda (respectivamente).
@@ -109,7 +109,7 @@
                 moeda.setBounce(0.7);
 
 
-                //Criando barreira física entre moeda e as plataformas.
+                //Adicionando barreira física entre moeda e as plataformas.
                 this.physics.add.collider(moeda, plataforma);
                 this.physics.add.collider(moeda, plataforma2);
                 this.physics.add.collider(moeda, plataforma3);
@@ -156,22 +156,23 @@
                 //***TAREFA EXTRA: usando lista para trocar o fundo do jogo.
                 //A cada 10 moedas coletadas (10 pontos) pelo jogador, o fundo troca com base nas imagens da lista.
                 if (pontuacao % 10 === 0 && pontuacao > 0 && pontuacao !== ultimaTrocaDeImagemDeFundo) {
-                    indiceDoFundo = (indiceDoFundo + 1) % fundos.length; 
-                    fundo.setTexture(fundos[indiceDoFundo]); 
-                    ultimaTrocaDeImagemDeFundo = pontuacao; 
+                    indiceDoFundo = (indiceDoFundo + 1) % fundos.length; //Todos os índices da lista de fundos são percorridos e, ao fim desta ação, o processo é reiniciado.
+                    fundo.setTexture(fundos[indiceDoFundo]); //Mudando o fundo por meio do método setTexture.
+                    ultimaTrocaDeImagemDeFundo = pontuacao; //Associando a troca de fundo com a pontuação atual.
+                    console.log(ultimaTrocaDeImagemDeFundo); //Depuração.
                 }
 
-                moedaPegada = false;
+                moedaPegada = false; //A moeda vai estar habilitada de novo para ser coletada.
             }
 
             //Função para ativar o turbo do personagem.
             function ativarTurbo() {
-                fogo.setVisible(true);
+                fogo.setVisible(true); //Foguinho visível.
             }
 
             //Função para desativar o turbo do personagem.
             function semTurbo() {
-                fogo.setVisible(false);
+                fogo.setVisible(false); //Foguinho desativado.
             }
         </script>
     </body>
