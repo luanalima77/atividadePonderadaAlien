@@ -90,7 +90,7 @@
                 teclado = this.input.keyboard.createCursorKeys();
 
 
-                //Plataforma 
+                //Plataforma.
                 plataforma = this.physics.add.staticImage(larguraJogo / 2, alturaJogo / 2, 'plataforma_tijolo');
                 this.physics.add.collider(alien, plataforma);
 
@@ -138,7 +138,7 @@
                 } else if (teclado.right.isDown) {
                     alien.setVelocityX(+150); //Movimento para direita.
                 } else {
-                    alien.setVelocityX(0); //Sem movimento quando left e right não estão pressionados
+                    alien.setVelocityX(0); //Sem movimento quando left e right não estão pressionados.
                 }
 
                 if (teclado.up.isDown) {
