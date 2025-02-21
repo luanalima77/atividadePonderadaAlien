@@ -157,7 +157,7 @@
                 if (pontuacao % 10 === 0 && pontuacao > 0 && pontuacao !== ultimaTrocaDeImagemDeFundo) {
                     indiceDoFundo = (indiceDoFundo + 1) % fundos.length; 
                     fundo.setTexture(fundos[indiceDoFundo]); 
-                    ultimaTrocaDeImagemDeFundo = pontuacao; 
+                    ultimaTrocaDeImagemDeFundo = pontuacao + 1; 
                 }
 
                 moedaPegada = false;
